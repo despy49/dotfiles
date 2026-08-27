@@ -1,0 +1,13 @@
+[Unit]
+Description=Fix DNS and Network After DoS Tunnel Start
+After=dos-tun.service
+Requires=dos-tun.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sudo /usr/local/bin/dos-activate.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=graphical-session.target
+

@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily cleanup of user trash can
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/trash_clean.sh

@@ -1,0 +1,1 @@
+../../dotfiles/shell/.local/bin/trash_clean.sh

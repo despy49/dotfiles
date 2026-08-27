@@ -1,0 +1,12 @@
+[Unit]
+Description=Run Custom ClamAV update every 4 hours
+
+[Timer]
+OnBootSec=15min
+OnCalendar=*-*-* 00,04,08,12,16,20:00:00
+Persistent=True
+AccuracySec=5m
+Unit=clamav-custom-update.service
+
+[Install]
+WantedBy=timers.target

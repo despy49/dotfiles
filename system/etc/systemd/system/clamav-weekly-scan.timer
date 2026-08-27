@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Weekly ClamAV System Scan
+
+[Timer]
+OnCalendar=Sun *-*-* 00:10:00
+Persistent=true
+AccuracySec=15m
+
+[Install]
+WantedBy=timers.target
+

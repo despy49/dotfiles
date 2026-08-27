@@ -1,0 +1,19 @@
+[Unit]
+Description=Custom ClamAV database update via auto SSH proxy
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=600
+StartLimitBurst=3
+OnFailure=clamav-custom-update-mail.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment=HOME=/home/glitch
+ExecStart=/usr/local/bin/update_clam_dbs.sh
+Restart=on-failure
+RestartSec=180
+
+[Install]
+WantedBy=multi-user.target

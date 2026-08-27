@@ -1,0 +1,28 @@
+ignore seccomp
+ignore include whitelist-runuser-common.inc
+
+noblacklist ${HOME}/Downloads
+whitelist ${HOME}/Downloads
+noblacklist ${HOME}/Pictures
+whitelist ${HOME}/Pictures
+allow-debuggers
+
+
+# access to audi server sockets
+noblacklist ${RUNUSER}/pipewire-0
+whitelist ${RUNUSER}/pipewire-0
+noblacklist ${RUNUSER}/pulse
+whitelist ${RUNUSER}/pulse
+
+
+# access to proxy binary
+noblacklist /usr/bin/keepassxc-proxy
+
+# access to json manifests
+noblacklist ${HOME}/.mozilla/native-messaging-hosts
+whitelist ${HOME}/.mozilla/native-messaging-hosts
+noblacklist ${HOME}/.mozilla/firefox
+whitelist ${HOME}/.mozilla/firefox
+
+noblacklist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+noblacklist ${RUNUSER}/app/org.keepassxc.KeePassXC

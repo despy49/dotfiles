@@ -1,0 +1,17 @@
+[Unit]
+Description=SSH Tunnel for DNS
+After=network.target network-online.target graphical-session.target escape-from-matrix.service
+Requisite=escape-from-matrix.service
+Requires=escape-from-matrix.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh -N -L 127.0.0.1:5300:127.0.0.1:53 escape-from-matrix
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target
+

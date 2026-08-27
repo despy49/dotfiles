@@ -1,0 +1,16 @@
+[Unit]
+Description=Weekly ClamAV System Scan
+After=clamav-daemon.service
+Wants=clamav-daemon.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/local/bin/clamav_weekly_scan.sh
+Nice=19
+CPUSchedulingPolicy=idle
+IOSchedulingClass=3
+IOWeight=10
+CPUQuota=30%
+

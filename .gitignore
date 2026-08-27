@@ -1,0 +1,85 @@
+# ==============================================================================
+# GLOBAL DOTFILES IGNORE
+# ==============================================================================
+
+# 1. Ignore all by dflt
+*
+!*/
+!.gitignore
+
+# ==============================================================================
+# ALLOWED PACKAGES & CONFIGS
+# ==============================================================================
+
+# --- APPS ---
+!apps/
+!apps/.config/
+!apps/.config/systemd/
+!apps/.config/systemd/user/
+!apps/.config/systemd/user/*.service
+!apps/.config/systemd/user/*.timer
+!apps/.local/
+!apps/.local/bin/
+!apps/.local/bin/trash_clean.sh
+
+# --- VS CODE ---
+!vscode/
+vscode/**/*
+!vscode/extensions.txt
+
+# --- FIREJAIL ---
+!firejail/
+!firejail/.config/
+!firejail/.config/firejail/
+!firejail/.config/firejail/*.local
+!firejail/.config/firejail/*.profile
+
+# --- KDE PLASMA ---
+!kde/
+!kde/.config/
+!kde/.config/kglobalshortcutsrc
+!kde/.config/kwinrc
+!kde/.config/powerdevilrc
+
+# --- NVIDIA ---
+!nvidia/
+!nvidia/.nvidia-settings-rc
+
+
+# --- VIM ---
+!vim/
+!vim/.vimrc
+
+# --- SYSTEM ---
+!system/
+!system/etc/
+!system/etc/systemd/
+!system/etc/systemd/system/
+!system/etc/systemd/system/*.service
+!system/etc/systemd/system/*.timer
+!system/usr/
+!system/usr/local/
+!system/usr/local/bin/
+!system/usr/local/bin/*.sh
+
+# --- SHELL ---
+!shell/
+!shell/.bash*
+!shell/.profile
+!shell/user-dirs.*
+!shell/.local/
+!shell/.local/bin/
+!shell/.local/bin/trash_clean.sh
+
+# --- BURP ---
+!burp/
+!burp/.BurpSuite/
+!burp/.BurpSuite/*.json
+
+# --- CRYPTO ---
+!crypto/
+!crypto/**/*
+
+# --- GIT ---
+!git/
+!git/.gitconfig
