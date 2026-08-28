@@ -63,5 +63,34 @@ for group in "${!SOURCES[@]}"; do
     fi
 done
 
+
+
+# filter out non commitable shit
+LOCAL_SOURCE="/etc/dns-blocker/motherfuckers.txt"
+if [ -f "$LOCAL_SOURCE" ]; then
+    echo "[*] Processing local group: SYSTEM-BLOCK-RU"
+
+    # jut in case
+    > "$TMP_DOMAINS"
+
+    # read and remove comments,empty lines, comments
+    grep -v -E "(^[[:space:]]*#|^[[:space:]]*$)" "$LOCAL_SOURCE" | \
+    sed -e 's/[[:space:]]*$//g' -e 's/\r//g' | \
+    grep -vFf "$TMP_WHITE" | sort -u > "$TMP_DOMAINS"
+
+    if [ -s "$TMP_DOMAINS" ]; then
+        echo "  [+] local filtering success. Injecting the block: SYSTEM-BLOCK-RU..."
+        echo "# BEGIN AD-BLOCK: SYSTEM-BLOCK-RU" >> "$HOSTS_FILE"
+        awk '{print "0.0.0.0 " $1}' "$TMP_DOMAINS" >> "$HOSTS_FILE"
+        echo "# END AD-BLOCK: SYSTEM-BLOCK-RU" >> "$HOSTS_FILE"
+    else
+        echo "  [!] local filtered list was empty."
+    fi
+fi
+
+
+
+
+
 rm -f "$TMP_RAW" "$TMP_DOMAINS" "$TMP_WHITE"
 echo "[+] hosts update finished!"

@@ -1,0 +1,18 @@
+[user]
+	name = Konstantin Kovalenko
+	email = konstantin.l.kovalenko@gmail.com
+	signingkey = B80C2750E431E95D
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+[branch]
+	sort = -committerdate
+[color]
+	ui = auto
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+[core]
+	editor = vim
