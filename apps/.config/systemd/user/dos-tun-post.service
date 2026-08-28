@@ -8,6 +8,6 @@ Type=oneshot
 ExecStart=/usr/bin/sudo /usr/local/bin/dos-activate.sh
 RemainAfterExit=true
 
-[Install]
-WantedBy=graphical-session.target
+#[Install]
+#WantedBy=graphical-session.target
 
