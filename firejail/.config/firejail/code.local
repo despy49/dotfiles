@@ -1,0 +1,11 @@
+ignore private-cache
+
+noblacklist /run/media/glitch
+noblacklist ${HOME}/.local/share/uv
+noblacklist ${HOME}/.cache/uv
+noblacklist ${HOME}/dotfiles
+noblacklist ${HOME}/Desktop/.venv
+
+netfilter
+noblacklist 127.0.0.1
+
