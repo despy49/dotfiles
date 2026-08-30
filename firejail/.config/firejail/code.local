@@ -1,11 +1,14 @@
 ignore private-cache
 
-noblacklist /run/media/glitch
 noblacklist ${HOME}/.local/share/uv
+noblacklist ${HOME}/.cache/cortex-debug
+noblacklist ${HOME}/.config/wget
 noblacklist ${HOME}/.cache/uv
+
 noblacklist ${HOME}/dotfiles
-noblacklist ${HOME}/Desktop/.venv
+noblacklist ${HOME}/Projects
+
+noblacklist /run/media/glitch
 
 netfilter
 noblacklist 127.0.0.1
-
