@@ -9,8 +9,12 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 #  === THIRD-PARTY RUNTIME FIXES ===
 # redirect  Cortex-Debug logs
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export CORTEX_DEBUG_LOG_DIR="$HOME/.cache/cortex-debug"
-
+export DEBUGPY_LOG_DIR="$HOME/.cache/cortex-debug"
+export CORTEX_DEBUG_CACHE_DIR="$XDG_CACHE_HOME"
+export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 
 # === TERMINAL VISUALS (PS1) ===
 PS1='[\u@\h \W]\$ '

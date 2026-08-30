@@ -1,0 +1,35 @@
+# Отключаем деструктивную изоляцию кэша шрифтов (чтобы избежать exit_code=11)
+ignore private-cache
+
+# Разрешаем трафик на loopback (интерфейс петли) для вашего HTTP/SSH-туннеля
+noblacklist 127.0.0.1
+noblacklist ::1
+
+# Базовый доступ к папкам загрузок и картинок
+noblacklist ${HOME}/Downloads
+whitelist ${HOME}/Downloads
+noblacklist ${HOME}/Pictures
+whitelist ${HOME}/Pictures
+
+# Защита от сканирования вашей флешки KINGSTON и скрытых логов других приложений
+blacklist /run/media/glitch
+blacklist ${HOME}/.cache/cortex-debug
+blacklist ${HOME}/.config/wget
+
+# Допуск для звуковой подсистемы
+noblacklist ${RUNUSER}/pipewire-0
+whitelist ${RUNUSER}/pipewire-0
+noblacklist ${RUNUSER}/pulse
+whitelist ${RUNUSER}/pulse
+
+# --- ПОДДЕРЖКА РАСШИРЕНИЙ И KEEPASSXC ---
+# Разрешаем прокси-бинарник KeePassXC
+noblacklist /usr/bin/keepassxc-proxy
+
+# Разрешаем нативные сокеты и манифесты расширений Mullvad Browser
+noblacklist ${HOME}/.mullvad
+whitelist ${HOME}/.mullvad
+noblacklist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+noblacklist ${RUNUSER}/app/org.keepassxc.KeePassXC
+
+private-bin tr

@@ -8,7 +8,7 @@ function l {
     
     # OPSEC FIX: Если передан файл, просто рендерим его через lsd напрямую
     if [ -f "$target" ] || [ -L "$target" ]; then
-        lsd -ltdhi -d --color=always "$target" 2>/dev/null
+        lsd -ldhi -d --color=always "$target" 2>/dev/null
         return
     fi
     
@@ -24,9 +24,9 @@ function l {
     done
 
     # regular dirs only
-    [ ${#dirs[@]} -gt 0 ] && lsd -ltdhi -d --color=always "${dirs[@]}" 2>/dev/null
+    [ ${#dirs[@]} -gt 0 ] && lsd -ldhi -d --color=always "${dirs[@]}" 2>/dev/null
     # regular files only
-    [ ${#files[@]} -gt 0 ] && lsd -ltdhi -d --color=always "${files[@]}" 2>/dev/null
+    [ ${#files[@]} -gt 0 ] && lsd -ldhi -d --color=always "${files[@]}" 2>/dev/null
 
     cd - >/dev/null
 }
@@ -38,7 +38,7 @@ function la {
 
     # NO cd if file passed as arg
     if [ -f "$target" ] || [ -L "$target" ]; then
-        lsd -ltdhi -d --color=always "$target" 2>/dev/null
+        lsd -ldhi -d --color=always "$target" 2>/dev/null
         return
     fi
 
@@ -67,10 +67,10 @@ function la {
     done
     shopt -u dotglob
 
-    [ ${#h_dirs[@]} -gt 0 ] && lsd -ltdhi -d --color=always "${h_dirs[@]}" 2>/dev/null        # hidden dirs only 
-    [ ${#r_dirs[@]} -gt 0 ] && lsd -ltdhi -d --color=always "${r_dirs[@]}" 2>/dev/null        # regular dirs 
-    [ ${#h_files[@]} -gt 0 ] && lsd -ldthi -d --color=always "${h_files[@]}" 2>/dev/null      # hidden files 
-    [ ${#r_files[@]} -gt 0 ] && lsd -ldthi -d --color=always "${r_files[@]}" 2>/dev/null      # regular files
+    [ ${#h_dirs[@]} -gt 0 ] && lsd -ldhi -d --color=always "${h_dirs[@]}" 2>/dev/null        # hidden dirs only 
+    [ ${#r_dirs[@]} -gt 0 ] && lsd -ldhi -d --color=always "${r_dirs[@]}" 2>/dev/null        # regular dirs 
+    [ ${#h_files[@]} -gt 0 ] && lsd -ldhi -d --color=always "${h_files[@]}" 2>/dev/null      # hidden files 
+    [ ${#r_files[@]} -gt 0 ] && lsd -ldhi -d --color=always "${r_files[@]}" 2>/dev/null      # regular files
 
     cd - >/dev/null
 }
