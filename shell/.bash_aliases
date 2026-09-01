@@ -114,4 +114,3 @@ function lt {
 
 
 # === SYSTEM WRAPPERS & CLEANUP ALIASES ===
-alias vim="vim -i \$HOME/.cache/viminfo"

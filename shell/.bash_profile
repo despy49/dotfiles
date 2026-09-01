@@ -1,9 +1,10 @@
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
+
 # === SYSTEM PATHS  & EDITORSUSER PROFILE ===
 export EDITOR="vim"
 export VISUAL="code"
 
 # === XDG BASE DIR CFG ===
-export HISTFILE="$HOME/.cache/bash_history"
 export PYTHONHISTORY="$HOME/.cache/python_history"
 export CARGO_HOME="$HOME/.local/share/cargo"
 export RUSTUP_HOME="$HOME/.local/share/rustup"
@@ -43,7 +44,6 @@ unset -f add_to_path
 
 
 # === HW OVERRIDES ===
-export __GL_SHADER_DISK_CACHE_PATH="$HOME/.cache/nvidia"
 export NSS_DEFAULT_DB_TYPE="sql"
 
 # !!! INTERACTIVE SHELL TRIGGER!!!

@@ -69,6 +69,7 @@ vscode/**/*
 !shell/user-dirs.*
 !shell/.local/
 !shell/.local/bin/
+!shell/.local/bin/env
 !shell/.local/bin/trash_clean.sh
 
 # --- BURP ---
