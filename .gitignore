@@ -21,6 +21,13 @@
 !apps/.local/
 !apps/.local/bin/
 !apps/.local/bin/trash_clean.sh
+!apps/.thunderbird/
+!apps/.thunderbird/*/
+!apps/.thunderbird/profiles.ini
+!apps/.thunderbird/installs.ini
+!apps/.thunderbird/**/prefs.js
+!apps/.thunderbird/**/containers.json
+!apps/.thunderbird/**/xulstore.json
 
 # --- VS CODE ---
 !vscode/
