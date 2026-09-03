@@ -1,0 +1,7 @@
+include /etc/firejail/${app}.profile
+noblacklist ${HOME}/Music
+noblacklist ${HOME}/Videos
+noblacklist ${HOME}/Downloads
+whitelist ${HOME}/Music
+whitelist ${HOME}/Videos
+whitelist ${HOME}/Downloads

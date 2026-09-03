@@ -77,6 +77,7 @@ function la {
 
 
 # === CORE CLI OVERRIDES ===
+alias sudo='sudo -E bash -c "source ~/.bash_aliases; \"\$@\"" --'
 alias tree="eza --tree --icons=always --level=3 --long --no-user --no-time --git"
 alias htop="btop"
 
@@ -113,4 +114,24 @@ function lt {
 }
 
 
-# === SYSTEM WRAPPERS & CLEANUP ALIASES ===
+# === RIPGREP ===
+# highlighted, line-numbered, with context
+alias rgc="rg -C 2 --smart-case"
+
+# search a word in specific type files
+alias rgp="rg --type py"
+
+# term radio
+alias r='~/.local/bin/bitradio'
+
+# === INTERACTIVE TEXT SEARCH (RG + FZF) ===
+# Поиск текста внутри файлов с интерактивным превью в bat
+function fif {
+    local search_term="$1"
+    if [ -z "$search_term" ]; then
+        echo "Использование: fif \"текст_для_поиска\""
+        return 1
+    fi
+    rg --files-with-matches --no-messages "$search_term" | fzf --preview "rg --ignore-case --pretty --context 10 '$search_term' {}"
+}
+
