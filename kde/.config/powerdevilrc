@@ -3,7 +3,6 @@ DisplayBrightness=100
 UseProfileSpecificDisplayBrightness=true
 
 [AC][SuspendAndShutdown]
-AutoSuspendIdleTimeoutSec=300
 LidAction=2
 PowerButtonAction=2
 
@@ -12,7 +11,7 @@ DisplayBrightness=84
 UseProfileSpecificDisplayBrightness=true
 
 [Battery][SuspendAndShutdown]
-AutoSuspendIdleTimeoutSec=900
+AutoSuspendIdleTimeoutSec=120
 LidAction=2
 PowerButtonAction=2
 
