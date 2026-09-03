@@ -14,12 +14,29 @@ echo "=== Starting ClamAV weekly scan: $(date) ===" >> "$LOG_FILE"
 # scan via daemon is faster and more effective
 # --multiscan use all cores, --fdpass pass read rights to daemon
 # ret 1 = malware found, 2 = error
-/usr/bin/clamdscan --multiscan --fdpass --move=/var/lib/clamav/quarantine --log="$LOG_FILE" $TARGETS
+/usr/bin/clamdscan --config-file=/etc/clamav/weekly_scan.conf --multiscan --fdpass --move=/var/lib/clamav/quarantine --log="$LOG_FILE" $TARGETS
 SCAN_STATUS=$?
 echo "=== Scan complete: $(date) (Status: $SCAN_STATUS) ===" >> "$LOG_FILE"
 
-[ "$SCAN_STATUS" -eq 1 ] && (SUBJECT="[!!] ClamAV Alert: THREATS FOUND"; MESSAGE="$MSG_VRS")
-[ "$SCAN_STATUS" -eq 2 ] && (SUBJECT="[X] ClamAV Error: Scan Failed"; MESSAGE="$MSG_ERR")
-[ "$SCAN_STATUS" -ne 1 ] && [ "$SCAN_STATUS" -ne 2 ] && (SUBJECT="[?] ClamAV: Unknown Code ($SCAN_STATUS)"; MESSAGE="$MSG_UNK")
 
-[ "$SCAN_STATUS" -ne 0 ] && echo "$MESSAGE" | /usr/bin/mail -s "$SUBJECT" glitch
+case "$SCAN_STATUS" in
+    0)
+        SUBJECT="[OK] ClamAV Weekly Scan: System Clean"
+        MESSAGE="ClamAV weekly scan completed successfully. No threats found. Check $LOG_FILE"
+        ;;
+    1)
+        SUBJECT="[!!] ClamAV Alert: THREATS FOUND"
+        MESSAGE="$MSG_VRS"
+        ;;
+    2)
+        SUBJECT="[X] ClamAV Error: Scan Failed"
+        MESSAGE="$MSG_ERR"
+        ;;
+    *)
+        SUBJECT="[?] ClamAV: Unknown Code ($SCAN_STATUS)"
+        MESSAGE="$MSG_UNK"
+        ;;
+esac
+
+
+printf '%s\n' "$MESSAGE" | /usr/bin/mail -s "$SUBJECT" glitch

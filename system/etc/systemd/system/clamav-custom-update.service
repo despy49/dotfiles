@@ -10,7 +10,7 @@ OnFailure=clamav-custom-update-mail.service
 Type=simple
 User=root
 Group=root
-Environment=HOME=/home/glitch
+Environment=HOME=/root
 ExecStart=/usr/local/bin/update_clam_dbs.sh
 Restart=on-failure
 RestartSec=180

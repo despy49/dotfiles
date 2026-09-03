@@ -2,7 +2,7 @@
 Description=Run Weekly ClamAV System Scan
 
 [Timer]
-OnCalendar=Sun *-*-* 00:10:00
+OnCalendar=Fri *-*-* 19:30:00
 Persistent=true
 AccuracySec=15m
 
