@@ -1,2 +1,3 @@
 etc/systemd/system/
 apps/.config/systemd/user/
+.vscode-oss/extensions
