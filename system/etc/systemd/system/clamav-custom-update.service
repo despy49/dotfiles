@@ -1,7 +1,7 @@
 [Unit]
 Description=Custom ClamAV database update via auto SSH proxy
-After=network-online.target
-Wants=network-online.target
+After=network-online.target NetworkManager-wait-online.service systemd-resolved.service
+Wants=network-online.target NetworkManager-wait-online.service
 StartLimitIntervalSec=600
 StartLimitBurst=3
 OnFailure=clamav-custom-update-mail.service

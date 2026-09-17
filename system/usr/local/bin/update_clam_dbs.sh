@@ -24,14 +24,17 @@ fi
 echo $$ > "$LOCK_FILE"
 cleanup(){
 	echo "Cleaning up SSH tunnel and removing temp files"
-	pkill -f "ssh -N -D 127.0.0.1:8080"
+    if [ -n "$SSH_PID"  ] && kill -0 "$SSH_PID" 2>/dev/null; then
+        kill "$SSH_PID"
+    fi
+    #pkill -f "ssh -N -D 127.0.0.1:8080"
 	rm -f "$LOCK_FILE"
 	rm -rf "$TMP_DIR"
 }
 trap cleanup EXIT INT TERM
 
 echo "Openning SSH tunnel..."
-/usr/bin/ssh -N -D 127.0.0.1:8080 fyrkn &
+/usr/bin/ssh -N -D 127.0.0.1:8080 -o UserKnownHostsFile=/root/.ssh/known_hosts -F /root/.ssh/config  fyrkn &
 SSH_PID=$!
 
 sleep 3
