@@ -79,6 +79,9 @@ vscode/**/*
 !shell/.local/bin/env
 !shell/.local/bin/trash_clean.sh
 
+# --- STOW ---
+!.stowlocalignore
+
 # --- BURP ---
 !burp/
 !burp/.BurpSuite/
