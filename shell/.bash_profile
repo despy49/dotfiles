@@ -2,7 +2,7 @@
 
 # === SYSTEM PATHS  & EDITORSUSER PROFILE ===
 export EDITOR="vim"
-export VISUAL="code"
+#export VISUAL="code"
 
 # === XDG BASE DIR CFG ===
 export PYTHONHISTORY="$HOME/.cache/python_history"

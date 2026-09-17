@@ -1,6 +1,3 @@
-#[[ $- == *i* ]] && source -- /usr/share/blesh/ble.sh --attach=none
-
-
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 
 #" non-interactive shell bypass
@@ -39,10 +36,11 @@ export FZF_ALT_C_OPTS="--preview 'lsd -lhi -d --color=always {}' --bind 'ctrl-/:
 
 
 # === PUNK ROCK FZF THEME ===
-export FZF_DEFAULT_OPTS="--color=fg:#acb0be,bg:-1,hl:#ea6962 --color=fg+:#cdd6f4,bg+:#2a2b36,hl+:#ea6962 --color=info:#e67e80,pointer:#ea6962,marker:#e67e80,prompt:#ea6962,header:#e67e80 --border=rounded --margin=1 --padding=1 --layout=reverse --height=80% --prompt=⚡\ Анархия\ >\  --marker==> --pointer=▶"
+#export FZF_DEFAULT_OPTS="--color=fg:#acb0be,bg:-1,hl:#ea6962 --color=fg+:#cdd6f4,bg+:#2a2b36,hl+:#ea6962 --color=info:#e67e80,pointer:#ea6962,marker:#e67e80,prompt:#ea6962,header:#e67e80 --border=rounded --margin=1 --padding=1 --layout=reverse --height=80% --prompt=⚡\ Анархия\ >\  --marker==> --pointer=▶"
 
-# Подгружаем только автодополнение fzf, полностью отключая генератор клавиш Readline
-#[[ -f /usr/share/fzf/completion.bash ]] && source /usr/share/fzf/completion.bash
+
+export FZF_DEFAULT_OPTS='--color=fg:#acb0be,bg:-1,hl:#ea6962 --color=fg+:#cdd6f4,bg+:#2a2b36,hl+:#ea6962 --color=info:#e67e80,pointer:#ea6962,marker:#e67e80,prompt:#ea6962,header:#ea6962 --border=rounded --margin=1 --padding=1 --layout=reverse --height=80% --prompt="⚡ Анархия > " --marker==> --pointer=▶'
+
 eval "$(fzf --bash)"
 
 # === BITPUNK TERMINAL COLORS ===
@@ -53,28 +51,14 @@ export LS_COLORS="di=1;36:ln=1;35:so=1;32:pi=1;33:ex=1;31:bd=34;46:cd=34;43:su=3
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 
-#function punk_quote() {
-#    local quotes=(
-#        "«Панк — это не мода, не прическа и не рваные джинсы. Панк — это свобода!» — Михаил Горшенёв"
-#        "«При полной свободе выбора из двух зол выбирать оба третьих» — Егор Летов"
-#        "«Если ты не совершаешь ошибок, значит, ты не пробуешь ничего нового» — панк-мудрость"
-#        "«Мне плевать, если меня ненавидят. Я сам себя ненавижу!» — Сид Вишес"
-#        "«Панк умрет только тогда, когда умрет последний свободный человек»"
-#    )
-#    echo -e "\e[1;31m${quotes[$((RANDOM % ${#quotes[@]}))]}\e[0m\n"
-#}
-#punk_quote
-
-
-function punk_quote() {
+function motivations_quote() {
     local json_file="$HOME/Documents/quotations.json"
     
     if [ -f "$json_file" ] && command -v jq &>/dev/null; then
-        # Читаем цитаты и авторов, склеивая их в формат: "Текст" — Автор
+        # read quotes and format them as '"TEXT" - AUTHOR'
         local quotes=()
         mapfile -t quotes < <(jq -r '.data[] | "«\(.quote)» — \(.author)"' "$json_file" 2>/dev/null)
         
-        # Если массив успешно заполнился данными из JSON
         if [ ${#quotes[@]} -gt 0 ]; then
             local rand_index=$((RANDOM % ${#quotes[@]}))
             echo -e "\e[1;31m${quotes[$rand_index]}\e[0m\n"
@@ -82,7 +66,7 @@ function punk_quote() {
         fi
     fi
 
-    # РЕЗЕРВНЫЙ ВАРИАНТ (вызывается, если JSON недоступен)
+    # if JSON is not available 
     local fallback_quotes=(
         "«Панк — это не мода, не прическа и не рваные джинсы. Панк — это свобода!» — Михаил Горшенёв"
         "«При полной свободе выбора из двух зол выбирать оба третьих» — Егор Летов"
@@ -92,10 +76,33 @@ function punk_quote() {
     )
     echo -e "\e[1;31m${fallback_quotes[$((RANDOM % ${#fallback_quotes[@]}))]}\e[0m\n"
 }
-punk_quote
+motivations_quote
 
 
+function extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjvf $1    ;;
+      *.tar.gz)    tar xzvf $1    ;;
+      *.tar.xz)    tar xvf $1    ;;
+      *.bz2)       bzip2 -d $1    ;;
+      *.rar)       unrar2dir $1    ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1    ;;
+      *.tgz)       tar xzf $1    ;;
+      *.zip)       unzip2dir $1     ;;
+      *.Z)         uncompress $1    ;;
+      *.7z)        7z x $1    ;;
+      *.ace)       unace x $1    ;;
+      *)           echo "'$1' cannot be extracted via extract()"   ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
-# === BASH LINE EDITOR (SYNTAX HIGHLIGHTING & AUTOSUGGESTIONS) ===
-#[[ $- == *i* && -f /usr/share/blesh/ble.sh ]] && source /usr/share/blesh/ble.sh
-#[[ ! ${BLE_VERSION-} ]] || ble-attach
+#if [ -s /var/spool/mail/glitch ]; then
+#    echo -e "\n\e[1;31m[!] ВНИМАНИЕ: Новые алерты безопасности!\e[0m"
+#    echo -e "\e[1;33mЗапустите утилиту 'mail', чтобы прочитать подробный отчет.\e[0m\n"
+#fi

@@ -1,14 +1,12 @@
 # === SORTED LISTING FUNCTIONS ===
 # rule: 1. hidden dirs | 2. regular dirs | 3. hidden files | 4. regular files
 
-# skips hidden files entirely
 function l {
     local target="${1:-.}"
     local item dirs=() files=()
     
-    # OPSEC FIX: Если передан файл, просто рендерим его через lsd напрямую
     if [ -f "$target" ] || [ -L "$target" ]; then
-        lsd -ldhi -d --color=always "$target" 2>/dev/null
+        lsd -lhi -d --color=always "$target" 2>/dev/null
         return
     fi
     
@@ -23,34 +21,31 @@ function l {
         fi
     done
 
-    # regular dirs only
-    [ ${#dirs[@]} -gt 0 ] && lsd -ldhi -d --color=always "${dirs[@]}" 2>/dev/null
-    # regular files only
-    [ ${#files[@]} -gt 0 ] && lsd -ldhi -d --color=always "${files[@]}" 2>/dev/null
+    [ ${#dirs[@]} -gt 0 ] && lsd -lhi -d --color=always "${dirs[@]}" 2>/dev/null
+    [ ${#files[@]} -gt 0 ] && lsd -lhi -d --color=always "${files[@]}" 2>/dev/null
 
     cd - >/dev/null
 }
 
-# list structured into categories
 function la {
     local target="${1:-.}"
     local item name h_dirs=() r_dirs=() h_files=() r_files=()
 
-    # NO cd if file passed as arg
     if [ -f "$target" ] || [ -L "$target" ]; then
-        lsd -ldhi -d --color=always "$target" 2>/dev/null
+        lsd -lhi -d --color=always "$target" 2>/dev/null
         return
     fi
 
     cd "$target" 2>/dev/null || return
 
+    local old_shop=$(shopt -p nullglob dotglob)
     shopt -s nullglob dotglob
+
     for item in *; do
         [ -e "$item" ] || continue
         name="$item"
         [[ "$name" == "." || "$name" == ".." || "$name" == ".git" ]] && continue
 
-        # regular dirs without symlinks
         if [ -d "$item" ] && [ ! -L "$item" ]; then
             if [[ "$name" == .* ]]; then
                 h_dirs+=("$item")
@@ -65,12 +60,13 @@ function la {
             fi
         fi
     done
-    shopt -u dotglob
+    
+    eval "$old_shop"
 
-    [ ${#h_dirs[@]} -gt 0 ] && lsd -ldhi -d --color=always "${h_dirs[@]}" 2>/dev/null        # hidden dirs only 
-    [ ${#r_dirs[@]} -gt 0 ] && lsd -ldhi -d --color=always "${r_dirs[@]}" 2>/dev/null        # regular dirs 
-    [ ${#h_files[@]} -gt 0 ] && lsd -ldhi -d --color=always "${h_files[@]}" 2>/dev/null      # hidden files 
-    [ ${#r_files[@]} -gt 0 ] && lsd -ldhi -d --color=always "${r_files[@]}" 2>/dev/null      # regular files
+    [ ${#h_dirs[@]} -gt 0 ] && lsd -lhi -d --color=always "${h_dirs[@]}" 2>/dev/null        
+    [ ${#r_dirs[@]} -gt 0 ] && lsd -lhi -d --color=always "${r_dirs[@]}" 2>/dev/null        
+    [ ${#h_files[@]} -gt 0 ] && lsd -lhi -d --color=always "${h_files[@]}" 2>/dev/null      
+    [ ${#r_files[@]} -gt 0 ] && lsd -lhi -d --color=always "${r_files[@]}" 2>/dev/null      
 
     cd - >/dev/null
 }
@@ -78,23 +74,32 @@ function la {
 
 # === CORE CLI OVERRIDES ===
 alias sudo='sudo -E bash -c "source ~/.bash_aliases; \"\$@\"" --'
-alias tree="eza --tree --icons=always --level=3 --long --no-user --no-time --git"
+alias tree="eza --tree --icons=always --level=3 --long --group --no-time --git"
 alias htop="btop"
 
 
 # === SEC TOOLS & PENTEST ALIASES ===
 alias burpsuite="java -Dburp.ignore_java_version=true -jar /usr/share/java/burpsuite/burpsuite.jar"
-alias semgrep="docker run --rm -v \"\${PWD}:/src\" returntocorp/semgrep semgrep"
 
 
 # === DNS Tunneling ===
-alias doson='systemctl --user start dos-tun.service dos-tun-post.service && echo "[+] DoS active"'
-alias doton='systemctl --user stop dos-tun.service dos-tun-post.service
+# Switch to DNS over SSH
+alias doson='
+    if [ -f /etc/systemd/resolved.conf.d/ssh-tunnel.conf.bak ]; then
+        sudo mv /etc/systemd/resolved.conf.d/ssh-tunnel.conf.bak /etc/systemd/resolved.conf.d/ssh-tunnel.conf
+    fi
+    sudo systemctl start escape-from-matrix.service dos-tun.service
+    echo "[+] DNS over SSH activated (Port 5300)!"
+'
+
+# Switch from DNS over SSH to DoT (Quad9/Mullvad)
+alias doton='
+    sudo systemctl stop dos-tun.service escape-from-matrix.service
     if [ -f /etc/systemd/resolved.conf.d/ssh-tunnel.conf ]; then
         sudo mv /etc/systemd/resolved.conf.d/ssh-tunnel.conf /etc/systemd/resolved.conf.d/ssh-tunnel.conf.bak
     fi
-    sudo /usr/bin/systemctl restart systemd-resolved NetworkManager
-    echo "[-] Dos off. Back to DoT."
+    sudo resolvectl flush-caches
+    echo "[-] DNS over SSH stopped. Seamlessly switched to pure DoT (Quad9/Mullvad)."
 '
 
 
@@ -110,7 +115,7 @@ function lt {
         path="$1"
     fi
 
-    eza --tree --icons=always --level="$depth" --long --no-user --no-time --git -a "$path"
+    eza --tree --icons=always --level="$depth" --long --group --no-time --git -a "$path"
 }
 
 
