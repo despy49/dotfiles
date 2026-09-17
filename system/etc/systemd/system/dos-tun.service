@@ -1,0 +1,18 @@
+[Unit]
+Description=SSH Tunnel for DNS (System level)
+After=escape-from-matrix.service local-fs.target NetworkManager.service systemd-resolved.service
+Requires=escape-from-matrix.service local-fs.target systemd-resolved.service
+
+[Service]
+Type=simple
+User=glitch
+Group=glitch
+#Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh -N -L 127.0.0.1:5300:127.0.0.1:53 -F /home/glitch/.ssh/config escape-from-matrix
+Restart=always
+RestartSec=3
+ExecStartPost=/usr/bin/sleep 2
+ExecStartPost=+-/usr/bin/resolvectl flush-caches
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=SSH Dynamic SOCKS Proxy Tunnel (System level)
+After=network.target network-online.target NetworkManager.service local-fs.target
+#Wants=network-online.target
+Requires=local-fs.target
+
+[Service]
+Type=simple
+User=glitch
+Group=glitch
+#Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh -N -D 127.0.0.1:8081 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 -F /home/glitch/.ssh/config escape-from-matrix
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
