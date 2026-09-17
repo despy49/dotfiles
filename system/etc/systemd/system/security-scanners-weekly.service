@@ -1,0 +1,8 @@
+[Unit]
+Description=Weekly Rootkit and Malware Scanners (rkhunter & chkrootkit)
+After=network-online.target systemd-resolved.service local-fs.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/local/bin/rkhunter-weekly.sh && /usr/local/bin/chkrootkit-weekly.sh'

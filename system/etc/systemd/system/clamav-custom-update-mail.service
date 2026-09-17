@@ -3,8 +3,8 @@ Description=Send local mail notification on ClamAV update failure
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c '/usr/bin/journalctl -u clamav-custom-update.service -n 50 | /usr/bin/mail -S mta=/usr/bin/sudo -S mta-arguments="-u glitch /usr/bin/tee -a /var/mail/glitch" -s "ALERT: ClamAV Custom Update Failed" glitch'
+#ExecStart=/bin/sh -c '/usr/bin/journalctl -u clamav-custom-update.service -n 50 | /usr/bin/mail -S hold -S keepsave=no -S mta=/usr/bin/sudo -S mta-arguments="-u glitch /usr/bin/tee -a /var/mail/glitch" -s "ALERT: ClamAV Custom Update Failed" glitch'
+ExecStart=/bin/sh -c '/usr/bin/journalctl -u clamav-custom-update.service -n 50 | /usr/bin/mail -S hold -S keepsave=no -s "ALERT: ClamAV detection | update failure" glitch'
 
 [Install]
 WantedBy=multi-user.target
-

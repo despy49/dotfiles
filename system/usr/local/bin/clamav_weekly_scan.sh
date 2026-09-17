@@ -39,4 +39,4 @@ case "$SCAN_STATUS" in
 esac
 
 
-printf '%s\n' "$MESSAGE" | /usr/bin/mail -s "$SUBJECT" glitch
+printf '%s\n' "$MESSAGE" | /usr/bin/mail -S hold -S keepsave=no -s "$SUBJECT" glitch

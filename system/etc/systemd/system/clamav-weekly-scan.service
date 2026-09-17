@@ -1,6 +1,6 @@
 [Unit]
 Description=Weekly ClamAV System Scan
-After=clamav-daemon.service
+After=local-fs.target clamav-daemon.service
 Wants=clamav-daemon.service
 
 [Service]

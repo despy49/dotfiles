@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily Arch Linux Security Vulnerability Audit Notifier
+After=network-online.target systemd-resolved.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/arch_audit_notifier.sh
+
