@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LOG_FILE="/var/log/clamav/weekly_scan.log"
-TARGETS="/home /etc /var/www /root"
+TARGETS="/home /etc /root"
 
 MSG_VRS="ALERT: ClamAV weekly scan found viruses! Infected files moved to quarantine. Check $LOG_FILE"
 MSG_ERR="ERROR: ClamAV weekly scan failed due to technical error. Check systemd logs and $LOG_FILE"
