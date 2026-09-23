@@ -34,3 +34,31 @@ nnoremap <S-Tab> :tabprevious<CR>
 
 " move viminfo history out of home root to cache
 set viminfofile=$HOME/.cache/viminfo
+
+" no tab2space conversion in make files
+autocmd FileType make set noexpandtab   
+
+
+
+
+" --- C LSP ---
+" Enable hints and autocompletion
+function! s:on_lsp_buffer_enabled() abort
+    " Включаем нативный движок подсказок Vim (вызов через Ctrl+X Ctrl+O)
+    setlocal omnifunc=lsp#complete
+    
+    " Навигация по коду в Normal-режиме:
+    " gd — go to func definition
+    " K  — show docs and data type
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> K <plug>(lsp-hover)
+endfunction
+
+augroup lsp_install
+    autocmd!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" Enable hints menu
+set completeopt=menuone,noinsert,noselect
+
