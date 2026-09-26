@@ -102,6 +102,12 @@ function extract () {
   fi
 }
 
+#=============== MAN COLOURING FIX
+export MANPAGER="less -R --use-color -Dd+r -Du+g"
+export GROFF_NO_SGR=1
+
+
+
 #if [ -s /var/spool/mail/glitch ]; then
 #    echo -e "\n\e[1;31m[!] ВНИМАНИЕ: Новые алерты безопасности!\e[0m"
 #    echo -e "\e[1;33mЗапустите утилиту 'mail', чтобы прочитать подробный отчет.\e[0m\n"
