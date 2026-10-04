@@ -1,10 +1,11 @@
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 
-# === SYSTEM PATHS  & EDITORSUSER PROFILE ===
+# === USER PREFERENCES & ENVIRONMENT ===
 export EDITOR="vim"
 #export VISUAL="code"
 
 # === XDG BASE DIR CFG ===
+export NSS_DEFAULT_DB_TYPE="sql"
 export PYTHONHISTORY="$HOME/.cache/python_history"
 export CARGO_HOME="$HOME/.local/share/cargo"
 export RUSTUP_HOME="$HOME/.local/share/rustup"
@@ -34,17 +35,13 @@ XDG_BIN_PATHS=(
     "$HOME/.local/bin"
 )
 
-# filter all path
+# apply paths
 for bin_path in "${XDG_BIN_PATHS[@]}"; do
     add_to_path "$bin_path"
 done
 
-# cleanup temp func from session
+# cleanup temporary function from session
 unset -f add_to_path
-
-
-# === HW OVERRIDES ===
-export NSS_DEFAULT_DB_TYPE="sql"
 
 # !!! INTERACTIVE SHELL TRIGGER!!!
 if [ -f ~/.bashrc ]; then
