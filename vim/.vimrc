@@ -80,6 +80,37 @@ endif
 
 
 
+" ==== AUTOMATIC UV/.VENV INTERPOLATION WITH AUTO-LOAD
+function! s:activate_local_venv() abort
+    " find .venv in parent dirs relative to the open file
+    let l:venv_path = finddir('.venv', expand('%:p:h') . ';')
+    if l:venv_path != ''
+        let l:abs_venv = fnamemodify(l:venv_path, ':p')
+        " $PATH replacement for .venv to be used by pylsp
+        let $PATH = l:abs_venv . 'bin:' . $PATH
+        let $VIRTUAL_ENV = l:abs_venv
+        
+        " make jedi use .project .venv
+        let $JEDI_ENVIRONMENT = l:abs_venv
+        " attempt to make it work faster
+        let $PYLSP_JEDI_COMPLETION_EAGER = '1'
+    endif
+endfunction
+
+augroup VenvActivation
+    autocmd!
+    " triggered on any python file opened before starting LSP
+    autocmd BufNewFile,BufRead *.py call s:activate_local_venv()
+augroup END
+
+
+
+
+
+
+
+
+
 " ================INSTANT AUTOCOMPLETION POPUPS
 " Allow popups
 let g:asyncomplete_auto_popup = 1
@@ -192,4 +223,3 @@ nnoremap <Space>fg :Rg<CR>
 nnoremap <leader>h1 'A
 nnoremap <leader>h2 'B
 nnoremap <leader>h3 'C
-
