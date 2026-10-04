@@ -4,7 +4,7 @@ After=network-online.target NetworkManager-wait-online.service systemd-resolved.
 Wants=network-online.target NetworkManager-wait-online.service
 StartLimitIntervalSec=600
 StartLimitBurst=3
-OnFailure=clamav-custom-update-mail.service
+OnFailure=my-mail@ALERT:\x20ClamAV\x20Custom\x20Update\x20Failed.service
 
 [Service]
 Type=simple

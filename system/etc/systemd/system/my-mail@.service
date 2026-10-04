@@ -1,0 +1,6 @@
+[Unit]
+Description=Send local mail notification on service failure
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/usr/bin/journalctl -u clamav-custom-update.service -n 50 | /usr/bin/mail -S hold -S keepsave=no -s "%I" glitch'

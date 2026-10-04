@@ -2,6 +2,7 @@
 Description=Weekly ClamAV System Scan
 After=local-fs.target clamav-daemon.service
 Wants=clamav-daemon.service
+OnFailure=my-mail@ALERT:\x20ClamAV\x20Weekly\x20Scan\x20Failed.service
 
 [Service]
 Type=simple
