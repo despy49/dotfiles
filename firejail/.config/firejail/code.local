@@ -1,4 +1,5 @@
 ignore private-cache
+ignore noexec /tmp
 
 noblacklist ${HOME}/.local/share/uv
 noblacklist ${HOME}/.cache/cortex-debug
